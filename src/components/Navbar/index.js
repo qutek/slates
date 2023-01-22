@@ -11,12 +11,16 @@ const StyleAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: 1,
 }));
 
+const StyledBoxNoDrag = styled(Box)(({ theme }) => ({
+  WebkitAppRegion: 'no-drag',
+}));
+
 const Navbar = () => {
   const setState = useAppStore(state => state.setState);
   return (
     <StyleAppBar position="static">
       <Toolbar variant="dense">
-        <Box sx={{ flexGrow: 1 }}>
+        <StyledBoxNoDrag>
           <IconButton onClick={() => slates.invoke('window', 'close')} sx={{ padding: '2px' }} edge="start" disableRipple>
             <CloseSquare size="18" color='#FF605C' variant="Bold" />
           </IconButton>
@@ -26,7 +30,7 @@ const Navbar = () => {
           <IconButton onClick={() => slates.invoke('window', 'fullscreen')} sx={{ padding: '2px' }} disableRipple>
             <Maximize3 size="18" color="#00CA4E" variant="Bold" />
           </IconButton>
-        </Box>
+        </StyledBoxNoDrag>
         <Box>
           {/* <IconButton onClick={() => setState({ useMini: true })} sx={{ padding: '2px' }} edge="end" disableRipple>
             <Maximize size="18" variant="TwoTone" />
