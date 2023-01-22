@@ -1,0 +1,52 @@
+import { useMemo, useState } from 'react';
+import { Grid, Divider } from '@mui/material';
+import find from 'lodash/find';
+import slates from 'slates';
+import { useAppStore } from '@hooks/useAppStore';
+import translator from '@utils/translator';
+import { ResultBottomActions, ResultTopActions } from './ResultActions';
+import { StyledTranslateGrid } from './styles';
+import { LANGUAGES } from '@src/dummy/lang';
+
+const TranslateResult = ({ lang }) => {
+  const [isPronouncing, setIsPronouncing] = useState(false);
+  const translateResult = useAppStore(state => state.translateResult);
+
+  const currentLang = useMemo(() => find(LANGUAGES, (language) => language.key === lang), [lang]);
+
+  const handlePronounce = () => {
+    if (!translateResult?.mainMeaning) return;
+    setIsPronouncing(true);
+    translator.pronounce(translateResult?.mainMeaning, lang).then(() => setIsPronouncing(false));
+  }
+
+  return (
+    <StyledTranslateGrid
+      container
+      direction="column"
+      justifyContent="space-between"
+      alignItems="stretch"
+      type="result"
+    >
+      <Grid item>
+        <div>
+          <ResultTopActions currentLang={currentLang} />
+          <Divider style={{ margin: '10px 0' }} />
+        </div>
+      </Grid>
+      <Grid item xs>
+        <div className='textarea'>
+          <span>{translateResult?.mainMeaning}</span>
+          {/* <IconButton>
+            <Star1 size="18" />
+          </IconButton> */}
+        </div>
+      </Grid>
+      <Grid item>
+        <ResultBottomActions onCopy={() => slates.invoke('copy', translateResult?.mainMeaning)} onPronounce={handlePronounce} isPronouncing={isPronouncing} />
+      </Grid>
+    </StyledTranslateGrid>
+  );
+}
+
+export default TranslateResult;
