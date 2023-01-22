@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Grid, Divider } from '@mui/material';
+import { Grid, Divider, Snackbar, Alert } from '@mui/material';
 import find from 'lodash/find';
 import debounce from 'lodash/debounce';
 
@@ -17,6 +17,7 @@ const DEBOUNCE_WAIT = 500;
 const TranslateInput = ({ lang, targetLang }) => {
   const [value, setValue] = useState('');
   const [isPronouncing, setIsPronouncing] = useState(false);
+  const [copying, setCopying] = useState(false);
   const setState = useAppStore(state => state.setState);
 
   const text = useTranslateStore(state => state.text);
@@ -30,6 +31,8 @@ const TranslateInput = ({ lang, targetLang }) => {
     setValue(e.target.value); // update value.
     debounceSetText(e.target.value); // debounce set text to translate.
   }, []);
+
+  const handleCopy = () => !!text && slates.invoke('copy', text).then(() => setCopying(true));
 
   const handlePronounce = () => {
     if (!value) return;
@@ -73,8 +76,13 @@ const TranslateInput = ({ lang, targetLang }) => {
         </div>
       </Grid>
       <Grid item>
-        <InputBottomActions onCopy={() => slates.invoke('copy', text)} onPronounce={handlePronounce} isPronouncing={isPronouncing} />
+        <InputBottomActions onCopy={handleCopy} onPronounce={handlePronounce} isPronouncing={isPronouncing} />
       </Grid>
+      <Snackbar open={copying} autoHideDuration={3000} onClose={() => setCopying(false)}>
+        <Alert onClose={() => setCopying(false)} severity="success" sx={{ width: '100%' }}>
+          Text Copied!
+        </Alert>
+      </Snackbar>
     </StyledTranslateGrid>
   );
 }
