@@ -2,6 +2,7 @@ import { app, globalShortcut, session, nativeTheme, BrowserWindow } from 'electr
 import Store from 'electron-store';
 import { Slates } from '@utils/slates';
 import { setUpdateNotification } from 'electron-update-notifier';
+import * as path from 'path';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -31,12 +32,12 @@ app.on('ready', async () => {
     slates = new Slates(app, store);
 
     setUpdateNotification();
-
-    if (app.isPackaged) {
+    if (!app.isPackaged) {
       // https://github.com/electron/electron/issues/36545
       // https://polypane.app/docs/downgrading-react-devtools/
-      const DEVTOOL_PATH = '/Users/qutek/Development/APPS/slates/extensions/react-devtool-4.27'; // @todo | change to dynamimic.
-      await session.defaultSession.loadExtension(DEVTOOL_PATH, { allowFileAccess: true })
+      const DEVTOOL_PATH = path.resolve(path.join(__dirname, '..', '..', 'extensions/react-devtool-4.27')); // __dirname is the main directory from the .webpack dir.
+      console.log('Loading devtool extension from: ', DEVTOOL_PATH);
+      await session.defaultSession.loadExtension(DEVTOOL_PATH, { allowFileAccess: true });
     }
   } catch (error) {
     console.log('error', error)
