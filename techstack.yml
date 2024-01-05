@@ -1,7 +1,8 @@
 repo_name: qutek/slates
 report_id: '0940fe01d9e09eab841d1599a9c08d4e'
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-14T15:34:57+00:00'
+timestamp: '2024-01-05T08:43:41+00:00'
 requested_by: qutek
 provider: github
 branch: master
@@ -15,6 +16,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/qutek/slates
   detection_source: Repo Metadata
 - name: JavaScript
   description: Lightweight, interpreted, object-oriented language with first-class
@@ -25,6 +27,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/qutek/slates
   detection_source: Repo Metadata
 - name: Electron
   description: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -36,7 +39,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Cross-Platform Desktop Development
   image_url: https://img.stackshare.io/service/2946/default_18a71b65e69d7aef5f218ae07f64eb6e1594c444.jpg
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -50,7 +53,7 @@ tools:
   category: Libraries
   sub_category: Javascript UI Libraries
   image_url: https://img.stackshare.io/service/1020/OYIaJ1KK.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -64,7 +67,7 @@ tools:
   category: Libraries
   sub_category: Monitoring for Analytics
   image_url: https://img.stackshare.io/service/11559/zustand.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -77,6 +80,7 @@ tools:
   category: Languages & Frameworks
   sub_category: CSS Pre-processors / Extensions
   image_url: https://img.stackshare.io/service/8074/default_d2b16fd6997fb2e164de645a34f9b8d5a880d999.png
+  detection_source_url: https://github.com/qutek/slates/blob/master/package.json
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -90,7 +94,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: JavaScript Compilers
   image_url: https://img.stackshare.io/service/2739/-1wfGjNw.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -103,6 +107,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/3337/Q4L7Jncy.jpg
+  detection_source_url: https://github.com/qutek/slates/blob/master/package.json
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -114,6 +119,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/qutek/slates
   detection_source: Repo Metadata
 - name: GitHub Actions
   description: Automate your workflow from idea to production
@@ -123,7 +129,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Continuous Integration
   image_url: https://img.stackshare.io/service/11563/actions.png
-  detection_source: ".github/workflows/release.yml"
+  detection_source_url: https://github.com/qutek/slates/blob/master/.github/workflows/build.yml
+  detection_source: ".github/workflows/build.yml"
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
 - name: Webpack
@@ -136,7 +143,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: JS Build Tools / JS Task Runners
   image_url: https://img.stackshare.io/service/1682/IMG_4636.PNG
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -148,6 +155,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/5848/44mC-kJ3.jpg
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: yarn.lock
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -159,6 +167,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/qutek/slates/blob/master/package.json
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -171,7 +180,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/2438/lodash.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -185,7 +194,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15810/default_004658cda9b38934f2871435e9dc15608c86e8be.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -199,7 +208,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15890/default_6743ba96cf149a3c3c68a185199f9705d6eff80e.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -213,7 +222,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16702/default_4b738bf1758d38dddd276589bbea47fca5a990df.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -227,7 +236,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15800/default_4acafe585186b4157fa23322ae7ca89e24b5cdef.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -241,7 +250,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15941/default_b45165a5d30e541ab11711a34a78209b3e8ed7fd.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -255,7 +264,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15834/default_4479dbac220be99e50e724b2df6cf415241d71fd.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -269,7 +278,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15808/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
@@ -283,7 +292,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15822/default_004658cda9b38934f2871435e9dc15608c86e8be.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/qutek/slates/blob/master/yarn.lock
   detection_source: package.json
   last_updated_by: Lafif Astahdziq
   last_updated_on: 2023-01-22 06:45:46.000000000 Z
