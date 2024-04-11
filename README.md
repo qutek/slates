@@ -8,14 +8,3 @@ Slates is a simple, easy-to-use translate app that runs on all major platforms. 
 ## Getting Started
 
 ### Dependencies
-
-* [Electron](https://www.electronjs.org/)
-* [Electron Forge](https://www.electronforge.io/)
-* [React](https://reactjs.org/)
-* [Material UI](https://mui.com/)
-
-### Installing
-
-* Clone this repository `git clone https://github.com/qutek/slates.git`
-* Install dependencies `yarn install`
-* Start local development `yarn start`
