@@ -33,7 +33,7 @@ fn main() {
           let _ = window.move_window(Position::TopRight);
           // disable app icon
           // https://github.com/tauri-apps/tauri/discussions/6038#discussioncomment-4687750
-          app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+          // app.set_activation_policy(tauri::ActivationPolicy::Accessory);
           Ok(())
         })
         .system_tray(SystemTray::new().with_menu(tray_menu))

@@ -5,8 +5,8 @@ import { Store } from "tauri-plugin-store-api";
 const settingsStore = new Store("./slates-settings.bin");
 
 interface Settings {
-  bears: number;
-  addABear: () => void;
+  theme: string;
+  setTheme: (theme: string) => void;
 }
 
 const settingsStorage = (store: Store): StateStorage => ({
@@ -26,11 +26,11 @@ const settingsStorage = (store: Store): StateStorage => ({
   },
 });
 
-const useAppSettings = create<Settings>()(
+const useSettings = create<Settings>()(
   persist(
-    (set, get) => ({
-      bears: 0,
-      addABear: () => set({ bears: get().bears + 1 }),
+    (set) => ({
+      theme: "dark",
+      setTheme: (theme: string) => set({ theme }),
     }),
     {
       name: "slates-settings", // name of item in the storage (must be unique)
@@ -39,4 +39,4 @@ const useAppSettings = create<Settings>()(
   )
 );
 
-export default useAppSettings;
+export default useSettings;

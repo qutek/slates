@@ -18,6 +18,7 @@
       "@src/*": ["src/*"],
       "@assets/*": ["assets/*"],
       "@components/*": ["src/components/*"],
+      "@contexts/*": ["src/contexts/*"],
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
     },
