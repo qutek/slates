@@ -1,6 +1,6 @@
 [package]
 name = "slates"
-version = "0.0.0"
+version = "0.1.0"
 description = "Free desktop translate app"
 authors = ["Lafif Astahdziq"]
 edition = "2021"
