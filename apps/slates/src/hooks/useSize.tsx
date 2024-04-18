@@ -1,51 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from "react";
 
-type BodySize = {
+type ElementSize = {
   width: number;
   height: number;
 };
 
-const useSize = (): BodySize => {
-  const [bodySize, setBodySize] = useState<BodySize>({
-    width: document.body.offsetWidth,
-    height: document.body.offsetHeight,
+type ElementData = ElementSize & { elementRef: React.RefObject<HTMLDivElement> };
+
+const useElementSize = (): ElementData => {
+  const [elementSize, setElementSize] = useState<ElementSize>({
+    width: 0,
+    height: 0,
   });
 
+  const elementRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    const getElementSize = (): ElementSize => {
+      const { current: element } = elementRef;
+      if (element) {
+        return {
+          width: element.offsetWidth,
+          height: element.offsetHeight,
+        };
+      }
+      return { width: 0, height: 0 };
+    };
+
+    setElementSize(getElementSize());
+
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        if (entry.target === document.body) {
-          setBodySize({
-            width: entry.contentRect.width,
-            height: entry.contentRect.height,
-          });
+        if (entry.target === elementRef.current) {
+          setElementSize(getElementSize());
           break;
         }
       }
     });
 
-    const mutationObserver = new MutationObserver(() => {
-      setBodySize({
-        width: document.body.offsetWidth,
-        height: document.body.offsetHeight,
-      });
-    });
+    if (elementRef.current) {
+      resizeObserver.observe(elementRef.current);
+    }
 
-    resizeObserver.observe(document.body);
-    mutationObserver.observe(document.body, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-
-    // Cleanup the observers on unmount
+    // Cleanup the ResizeObserver on unmount
     return () => {
-      resizeObserver.disconnect();
-      mutationObserver.disconnect();
+      if (elementRef.current) {
+        resizeObserver.unobserve(elementRef.current);
+      }
     };
   }, []);
 
-  return bodySize;
+  return {
+    elementRef,
+    ...elementSize,
+  };
 };
 
-export default useSize;
+export default useElementSize;

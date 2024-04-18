@@ -60,11 +60,12 @@ const useAppContextValue = () => {
 
     appWindow
       .hide()
-      .then(() => appWindow.setSize(new LogicalSize(800, 600)))
+      .then(() => appWindow.setSize(new LogicalSize(900, 600)))
       .then(() => move_window(Position.Center))
       .then(() => appWindow.show())
       .then(() => appWindow.setFocus())
       .then(() => appWindow.setAlwaysOnTop(false))
+      .then(() => appWindow.setResizable(true))
       .then(() => setState({ miniWindow: false }))
       .catch(console.log);
   }, [miniWindow]);
@@ -82,6 +83,7 @@ const useAppContextValue = () => {
       .then(() => appWindow.show())
       .then(() => appWindow.setFocus())
       .then(() => appWindow.setAlwaysOnTop(true))
+      .then(() => appWindow.setResizable(false))
       .then(() => setState({ miniWindow: true }))
       .catch(console.log);
   }, [miniWindow]);

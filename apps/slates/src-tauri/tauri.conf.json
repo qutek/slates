@@ -29,7 +29,8 @@
         "unminimize": true,
         "setAlwaysOnTop": true,
         "startDragging": true,
-        "setDecorations": true
+        "setDecorations": true,
+        "setResizable": true
       },
       "globalShortcut": {
         "all": true
@@ -41,8 +42,8 @@
         "decorations": false,
         "hiddenTitle": true,
         "transparent": true,
-        "minWidth": 800,
-        "minHeight": 500
+        "minWidth": 900,
+        "minHeight": 600
       }
     ],
     "macOSPrivateApi": true,

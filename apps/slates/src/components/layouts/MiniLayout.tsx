@@ -4,23 +4,29 @@ import { move_window, Position } from "tauri-plugin-positioner-api";
 import useApp from "@src/hooks/useApp";
 import isEmpty from "lodash/isEmpty";
 import TextInput from "@src/components/TextInput";
+import { useEffect } from "react";
 
 export default function MiniLayout() {
   const { changeToMainWindow, results } = useApp();
+  const hasResult = !isEmpty(results);
 
-  // useEffect(() => {
-  //   console.log('width, height', width, height)
-  //   if (!height) {
-  //     return;
-  //   }
+  useEffect(() => {
+    const setWindowSize = async (hasResult: boolean) => {
+      const factor = await appWindow.scaleFactor();
+      const size = await appWindow.innerSize();
+      const logical = size.toLogical(factor);
 
-  //   appWindow.innerPosition().then(e => console.log('inner', e));
-  //   appWindow.innerSize().then(e => console.log('size', e));
+      if (hasResult) {
+        await appWindow.setSize(new LogicalSize(logical.width, 600))
+      } else {
+        await appWindow.setSize(new LogicalSize(logical.width, 129))
+      }
+    }
+    setWindowSize(hasResult);
+  }, [hasResult]);
 
-  //   appWindow.setSize(new LogicalSize(width, height)).then(() => move_window(Position.TopRight)).catch(console.log)
-  // }, [height])
   return (
-    <div className="flex flex-col rounded-t-[16px] h-full opacity-90">
+    <div className="flex flex-col rounded-t-[16px] max-h-full opacity-90">
       <div className="bg-base-200 rounded-none rounded-t-[16px] ">
         <TextInput className="textarea textarea-ghost textarea-xs text-2xl focus:outline-none focus:border-none bg-base-200 w-full border-0" />
       </div>
