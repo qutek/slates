@@ -21,11 +21,15 @@
         "close": true,
         "hide": true,
         "show": true,
+        "setSize": true,
+        "setFocus": true,
         "maximize": true,
         "minimize": true,
         "unmaximize": true,
         "unminimize": true,
-        "setAlwaysOnTop": true
+        "setAlwaysOnTop": true,
+        "startDragging": true,
+        "setDecorations": true
       },
       "globalShortcut": {
         "all": true
@@ -33,13 +37,12 @@
     },
     "windows": [
       {
-        "title": "Slates",
+        "titleBarStyle": "Overlay",
         "decorations": false,
+        "hiddenTitle": true,
         "transparent": true,
-        "alwaysOnTop": true,
-        "visible": true,
-        "width": 600,
-        "height": 100
+        "minWidth": 800,
+        "minHeight": 500
       }
     ],
     "macOSPrivateApi": true,

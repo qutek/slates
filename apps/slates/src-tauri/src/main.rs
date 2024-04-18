@@ -29,8 +29,8 @@ fn main() {
         .plugin(tauri_plugin_positioner::init())
         .setup(|app| {
           // positioning the window to top right.
-          let window = app.get_window("main").unwrap();
-          let _ = window.move_window(Position::TopRight);
+          // let window = app.get_window("main").unwrap();
+          // let _ = window.move_window(Position::TopRight);
           // disable app icon
           // https://github.com/tauri-apps/tauri/discussions/6038#discussioncomment-4687750
           // app.set_activation_policy(tauri::ActivationPolicy::Accessory);
@@ -89,7 +89,7 @@ fn main() {
             // detect click outside of the focused window and hide the app
             tauri::WindowEvent::Focused(is_focused) => {
                 if !is_focused {
-                    event.window().hide().unwrap();
+                    // event.window().hide().unwrap();
                 }
             }
 

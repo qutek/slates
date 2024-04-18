@@ -1,4 +1,77 @@
-import slates from 'slates';
+interface ITranslator {
+  translate(text: string, from: string, to: string): Promise<string>;
+}
+
+interface GoogleTranslateResponse {
+  sentences?: Array<{
+    trans?: string;
+    orig?: string;
+    translit?: string;
+    src_translit?: string;
+  }>;
+  dict?: Array<{
+    pos?: string;
+    entry?: Array<{
+      word?: string;
+      reverse_translation?: Array<string>;
+    }>;
+  }>;
+  definitions?: Array<{
+    pos?: string;
+    entry?: Array<{
+      gloss?: string;
+      example?: string;
+    }>;
+  }>;
+  examples?: {
+    example?: Array<{
+      text?: string;
+    }>;
+  };
+}
+
+interface ParseResult {
+  mainMeaning?: string;
+  originalText?: string;
+  tPronunciation?: string;
+  sPronunciation?: string;
+  detailedMeanings?: Array<{
+    pos?: string;
+    meaning?: string;
+    synonyms?: Array<string>;
+  }>;
+  definitions?: Array<{
+    pos?: string;
+    meaning?: string;
+    synonyms?: Array<string>;
+    example?: string;
+  }>;
+  examples?: Array<{
+    source?: string | null;
+    target?: string | null;
+  }>;
+}
+
+interface FallbackParseResult {
+  mainMeaning?: string;
+  originalText?: string;
+  tPronunciation?: string;
+  sPronunciation?: string;
+  detailedMeanings?: Array<{
+    pos: string;
+    meaning: string;
+  }>;
+  definitions?: Array<{
+    pos: string;
+    meaning: string;
+    example: string;
+  }>;
+  examples?: Array<{
+    source?: null;
+    target: string;
+  }>;
+  from?: any; // Consider replacing 'any' with a more specific type if possible
+}
 
 /**
  * Language maps.
@@ -114,7 +187,19 @@ const LANGUAGES = [
 /**
  * Google translate interface.
  */
-class Translator {
+class Translator implements ITranslator {
+  private TKK: [number, number];
+  private HOME_PAGE: string;
+  private HOST: string;
+  private TRANSLATE_URL: string;
+  private TTS_URL: string;
+  private FALLBACK_TRANSLATE_URL: string;
+  private FALLBACK_TTS_URL: string;
+  private fallBacking: boolean;
+  private LAN_TO_CODE: Map<string, string>;
+  private CODE_TO_LAN: Map<string, string>;
+  private AUDIO: HTMLAudioElement;
+
   constructor() {
     this.TKK = [434217, 1534559001];
 
@@ -147,7 +232,8 @@ class Translator {
     /**
      * Language to translator language code.
      */
-    this.LAN_TO_CODE = new Map(LANGUAGES);
+    // this.LAN_TO_CODE = new Map<string, string>(LANGUAGES);
+    this.LAN_TO_CODE = new Map<string, string>(LANGUAGES as [string, string][]);
 
     /**
      * Translator language code to language.
@@ -170,7 +256,7 @@ class Translator {
    *
    * @returns {String} request TK
    */
-  generateTK(a, b, c) {
+  generateTK(a: any, b: any, c: any) {
     b = Number(b) || 0;
     let e = [];
     let f = 0;
@@ -211,11 +297,11 @@ class Translator {
    *
    * @returns {String} magic number
    */
-  _magic(a, b) {
+  _magic(a: any, b: any) {
     for (var c = 0; c < b.length - 2; c += 3) {
-      var d = b.charAt(c + 2),
-        d = 'a' <= d ? d.charCodeAt(0) - 87 : Number(d),
-        d = '+' == b.charAt(c + 1) ? a >>> d : a << d;
+      let d = b.charAt(c + 2);
+      d = 'a' <= d ? d.charCodeAt(0) - 87 : Number(d);
+      d = '+' == b.charAt(c + 1) ? a >>> d : a << d;
       a = '+' == b.charAt(c) ? (a + d) & 4294967295 : a ^ d;
     }
     return a;
@@ -263,7 +349,7 @@ class Translator {
    *
    * @returns {String} the URL
    */
-  generateDetectURL(text) {
+  generateDetectURL(text: string) {
     let query = '&sl=auto&tl=zh-cn';
     query += `&tk=${this.generateTK(
       text,
@@ -284,7 +370,7 @@ class Translator {
    *
    * @returns {String} the URL
    */
-  generateTranslateURL(text, from, to) {
+  generateTranslateURL(text: string, from: string, to: string) {
     let query = `&sl=${this.LAN_TO_CODE.get(from)}&tl=${this.LAN_TO_CODE.get(
       to,
     )}`;
@@ -305,7 +391,7 @@ class Translator {
    *
    * @returns {String} detected language
    */
-  parseDetectResult(response) {
+  parseDetectResult(response: any) {
     if (this.fallBacking) return this.CODE_TO_LAN.get(response[2]);
     return this.CODE_TO_LAN.get(response.ld_result.srclangs[0]);
   }
@@ -317,8 +403,8 @@ class Translator {
    *
    * @returns {Object} parsed result
    */
-  parseBetterResult(response) {
-    let result = new Object();
+  parseBetterResult(response: GoogleTranslateResponse) {
+    let result: ParseResult = {};
 
     if (response.sentences) {
       result.mainMeaning = '';
@@ -352,7 +438,7 @@ class Translator {
     if (response.dict) {
       result.detailedMeanings = [];
       for (let item of response.dict) {
-        for (let entry of item.entry) {
+        for (let entry of item.entry!) {
           result.detailedMeanings.push({
             pos: item.pos,
             meaning: entry.word,
@@ -365,7 +451,7 @@ class Translator {
     if (response.definitions) {
       result.definitions = [];
       for (let item of response.definitions) {
-        for (let entry of item.entry) {
+        for (let entry of item.entry!) {
           result.definitions.push({
             pos: item.pos,
             meaning: entry.gloss,
@@ -378,7 +464,7 @@ class Translator {
 
     if (response.examples) {
       result.examples = [];
-      for (let example of response.examples.example) {
+      for (let example of response.examples.example!) {
         result.examples.push({
           source: example.text,
           target: null,
@@ -387,7 +473,7 @@ class Translator {
 
       // Sort the result to fix the order of examples.
       result.examples.sort((a, b) => {
-        return a.source > b.source ? 1 : a.source === b.source ? 0 : -1;
+        return a.source! > b.source! ? 1 : a.source === b.source ? 0 : -1;
       });
     }
 
@@ -401,15 +487,15 @@ class Translator {
    *
    * @returns {Object} parsed result
    */
-  parseFallbackResult(response) {
-    let result = new Object();
+  parseFallbackResult(response: any[]): FallbackParseResult {
+    let result: FallbackParseResult = {};
     for (let i = 0; i < response.length; i++) {
       if (response[i]) {
         let items = response[i];
         switch (i) {
           case 0: {
-            let mainMeanings = [];
-            let originalTexts = [];
+            let mainMeanings: string[] = [];
+            let originalTexts: string[] = [];
             let lastIndex = items.length - 1;
 
             for (let j = 0; j <= lastIndex; j++) {
@@ -419,58 +505,42 @@ class Translator {
 
             result.mainMeaning = mainMeanings.join('');
             result.originalText = originalTexts.join('');
-            try {
-              if (lastIndex > 0) {
-                if (items[lastIndex][2] && items[lastIndex][2].length > 0) {
-                  result.tPronunciation = items[lastIndex][2];
-                }
-
-                if (items[lastIndex][3] && items[lastIndex][3].length > 0) {
-                  result.sPronunciation = items[lastIndex][3];
-                }
+            if (lastIndex > 0) {
+              if (items[lastIndex][2] && items[lastIndex][2].length > 0) {
+                result.tPronunciation = items[lastIndex][2];
               }
-            } catch (error) { }
-            // log("text: " + result.originalText + "\nmeaning: " + result.mainMeaning);
+
+              if (items[lastIndex][3] && items[lastIndex][3].length > 0) {
+                result.sPronunciation = items[lastIndex][3];
+              }
+            }
             break;
           }
           case 1:
-            result.detailedMeanings = new Array();
-            items.forEach((item) =>
-              result.detailedMeanings.push({
-                pos: item[0],
-                meaning: item[1].join(', '),
-              }),
-            );
-            // log("detailedMeanings: " + JSON.stringify(result.detailedMeanings));
+            result.detailedMeanings = items.map((item: any) => ({
+              pos: item[0],
+              meaning: item[1].join(', '),
+            }));
             break;
           case 2:
             result.from = items;
-            // log(result.from);
             break;
           case 12:
-            result.definitions = new Array();
-            items.forEach((item) => {
-              item[1].forEach((element) => {
-                result.definitions.push({
-                  pos: item[0],
-                  meaning: element[0],
-                  example: element[2],
-                });
-              });
-            });
-            // log("definitions: " + JSON.stringify(result.definitions));
+            result.definitions = items.flatMap((item: any) =>
+              item[1].map((element: any) => ({
+                pos: item[0],
+                meaning: element[0],
+                example: element[2],
+              }))
+            );
             break;
           case 13:
-            result.examples = new Array();
-            items.forEach((item) =>
-              item.forEach((element) =>
-                result.examples.push({
-                  source: null,
-                  target: element[0],
-                }),
-              ),
+            result.examples = items.flatMap((item: any) =>
+              item.map((element: any) => ({
+                source: null,
+                target: element[0],
+              }))
             );
-            // log("examples: " + JSON.stringify(result.examples));
             break;
           default:
             break;
@@ -487,9 +557,12 @@ class Translator {
    *
    * @returns {Object} parsed result
    */
-  parseTranslateResult(response) {
-    if (this.fallBacking) return this.parseFallbackResult(response);
-    return this.parseBetterResult(response);
+  // Assuming both parseBetterResult and parseFallbackResult return a ParseResult type
+  parseTranslateResult(response: GoogleTranslateResponse | any[]): ParseResult {
+    if (this.fallBacking) {
+      return this.parseFallbackResult(response as any[]);
+    }
+    return this.parseBetterResult(response as GoogleTranslateResponse);
   }
 
   /**
@@ -508,8 +581,8 @@ class Translator {
    *
    * @returns {Promise<String>} detected language Promise
    */
-  detect(text) {
-    let detectOnce = async () => {
+  detect(text: string) {
+    let detectOnce: any = async () => {
       /**
        * Google uses 4xx errors to indicate request parameters invalid, so api should
        * not throw error when status code is less than 500.
@@ -555,8 +628,8 @@ class Translator {
    *
    * @returns {Promise<Object>} translation Promise
    */
-  translate(text, from, to) {
-    let translateOnce = async () => {
+  translate(text: string, from: string, to: string) {
+    let translateOnce: any = async () => {
       /**
        * Google uses 4xx errors to indicate request parameters invalid, so api should
        * not throw error when status code is less than 500.
@@ -594,7 +667,7 @@ class Translator {
     return translateOnce();
   }
 
-  getAudioUrl(text, language, speedValue) {
+  getAudioUrl(text: string, language: string, speedValue: string) {
     return `${this.fallBacking ? this.FALLBACK_TTS_URL : this.TTS_URL
       }&q=${encodeURIComponent(text)}&tl=${this.LAN_TO_CODE.get(
         language,
@@ -614,25 +687,27 @@ class Translator {
    *
    * @returns {Promise<void>} Promise of playing
    */
-  async pronounce(text, language, speedValue = '0.8' ) {
+  async pronounce(text: string, language: string, speedValue: string = '0.8' ) {
     try {
       this.stopPronounce();
       const audioUrl = this.getAudioUrl(text, language, speedValue);
-      const audioBase64 = await slates.invoke('get-audio', audioUrl);
+      const audioBase64 = audioUrl; // @TODO: convert to base64
       this.AUDIO.src = audioBase64;
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         this.AUDIO.addEventListener("ended", () => {
           this.AUDIO.currentTime = 0;
           resolve(true)
         });
         this.AUDIO.play();
       });
-    } catch (error) {
+    } catch (error: unknown) {
       // TODO: handle API_ERR and NET_ERR differently.
+      // Check if error is an instance of Error to access its message property
+      const message = error instanceof Error ? error.message : 'An unknown error occurred';
       throw {
         errorType: 'NET_ERR',
         errorCode: 0,
-        errorMsg: error.message,
+        errorMsg: message,
         errorAct: {
           api: 'google',
           action: 'pronounce',

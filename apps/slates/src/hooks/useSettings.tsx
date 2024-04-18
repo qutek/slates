@@ -1,12 +1,17 @@
 import { create } from "zustand";
 import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
 import { Store } from "tauri-plugin-store-api";
+// import { pick } from "lodash";
 
 const settingsStore = new Store("./slates-settings.bin");
 
 interface Settings {
+  miniWindow: boolean;
   theme: string;
-  setTheme: (theme: string) => void;
+  sourceLang: string;
+  targetLang: string;
+  reverseTranslate: boolean;
+  setState: (state: any) => void;
 }
 
 const settingsStorage = (store: Store): StateStorage => ({
@@ -29,12 +34,20 @@ const settingsStorage = (store: Store): StateStorage => ({
 const useSettings = create<Settings>()(
   persist(
     (set) => ({
+      miniWindow: false,
       theme: "dark",
-      setTheme: (theme: string) => set({ theme }),
+      sourceLang: 'auto',
+      targetLang: 'id',
+      reverseTranslate: false,
+      translateResult: null,
+      showDetailResult: false,
+      setState: newState => set(state => ({ ...state, ...newState })),
     }),
     {
       name: "slates-settings", // name of item in the storage (must be unique)
       storage: createJSONStorage(() => settingsStorage(settingsStore)), // (optional) by default the 'localStorage' is used
+      // just pick item we want to store persistent.
+      // partialize: state => pick(state, ['miniWindow', 'theme', 'sourceLang', 'targetLang', 'reverseTranslate']),
     }
   )
 );

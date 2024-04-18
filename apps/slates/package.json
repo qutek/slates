@@ -22,8 +22,6 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@tauri-apps/api": "^1",
-    "iconsax-react": "^0.0.8",
-    "lodash": "^4.17.21",
     "tauri-plugin-positioner-api": "^0.2.7",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
     "zundo": "^2.1.0",

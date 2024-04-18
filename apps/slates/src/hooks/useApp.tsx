@@ -1,7 +1,7 @@
 import { AppContext, AppContextValue } from "@src/contexts/AppContext";
 import { useContext } from "react";
 
-const useAppContext = (): AppContextValue => {
+const useApp = (): AppContextValue => {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('useAppContext must be used within a AppProvider');
@@ -9,4 +9,4 @@ const useAppContext = (): AppContextValue => {
   return context;
 };
 
-export default useAppContext;
+export default useApp;
