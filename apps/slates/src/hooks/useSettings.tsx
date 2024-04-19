@@ -34,7 +34,7 @@ const settingsStorage = (store: Store): StateStorage => ({
 const useSettings = create<Settings>()(
   persist(
     (set) => ({
-      miniWindow: true,
+      miniWindow: false,
       theme: "dark",
       sourceLang: 'auto',
       targetLang: 'id',

@@ -17,7 +17,11 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col h-full rounded-[16px] bg-base-200 shadow-lg">
       <div data-tauri-drag-region="true" className="flex justify-between p-2">
-        <div></div>
+        <div className="flex justify-start items-center space-x-1.5 px-2">
+          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-red-400"></span>
+          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-yellow-400"></span>
+          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-green-400"></span>
+        </div>
         <div className="flex gap-1">
           <div
             className="tooltip tooltip-left"
@@ -49,7 +53,7 @@ export default function MainLayout() {
           <div className="flex justify-between p-2">
             <div className="flex gap-1">
               <span
-                onClick={() => setOpenModal("lang source")}
+                onClick={() => setOpenModal("source-lang")}
                 className="btn btn-link btn-xs text-primary"
               >
                 <Translate size={20} />
@@ -94,7 +98,7 @@ export default function MainLayout() {
           <div className="flex justify-between p-2">
             <div className="flex gap-1">
               <span
-                onClick={() => setOpenModal("lang target")}
+                onClick={() => setOpenModal("target-lang")}
                 className="btn btn-link btn-xs"
               >
                 <Translate size={20} />

@@ -13,6 +13,9 @@ import translator from "@src/utils/translator";
 import debounce from "lodash/debounce";
 import useTranslateHistory from "@src/hooks/useTranslateHistory";
 import { Position, move_window } from "tauri-plugin-positioner-api";
+import ThemePicker from "@src/components/settings/ThemePicker";
+import Settings from "@src/components/modals/Settings";
+import SelectLanguage from "@src/components/modals/SelectLanguage";
 
 const SHORTCUT = "CommandOrControl+Shift+T";
 
@@ -189,78 +192,17 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {children}
       <dialog ref={value.modalRef} className="modal rounded-box">
         <div className="modal-box h-full w-11/12 max-w-5xl">
-          {value.openModal}
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          {/* <p className="py-4">Press ESC key or click on ✕ button to close</p>
-          <div className="dropdown mb-72">
-            <div tabIndex={0} role="button" className="btn m-1">
-              Theme
-              <svg
-                width="12px"
-                height="12px"
-                className="h-2 w-2 fill-current opacity-60 inline-block"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 2048 2048"
-              >
-                <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52"
-            >
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Default"
-                  value="default"
-                />
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Retro"
-                  value="retro"
-                />
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Cyberpunk"
-                  value="cyberpunk"
-                />
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Valentine"
-                  value="valentine"
-                />
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Aqua"
-                  value="aqua"
-                />
-              </li>
-            </ul>
-          </div> */}
+          {value.openModal === "settings" && <Settings />}
+          {value.openModal === "source-lang" && (
+            <SelectLanguage type="source" />
+          )}
+          {value.openModal === "target-lang" && (
+            <SelectLanguage type="target" />
+          )}
         </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </AppContext.Provider>
   );
