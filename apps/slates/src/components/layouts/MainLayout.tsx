@@ -3,7 +3,6 @@ import {
   ArrowForwardSquare,
   BackSquare,
   Copy,
-  CopySuccess,
   DriverRefresh,
   Maximize,
   Setting3,
@@ -13,7 +12,15 @@ import {
 import TextInput from "@src/components/TextInput";
 
 export default function MainLayout() {
-  const { changeToMiniWindow, setOpenModal, undo, redo, results } = useApp();
+  const {
+    changeToMiniWindow,
+    setOpenModal,
+    inputRef,
+    undo,
+    redo,
+    copy,
+    results,
+  } = useApp();
   return (
     <div className="flex flex-col h-full rounded-[16px] bg-base-200 shadow-lg">
       <div data-tauri-drag-region="true" className="flex justify-between p-2">
@@ -78,7 +85,10 @@ export default function MainLayout() {
                 </span>
               </div>
               <div className="tooltip tooltip-top" data-tip="Copy">
-                <span className="btn btn-link btn-xs p-0 text-base-content">
+                <span
+                  onClick={() => copy(inputRef.current?.value as string)}
+                  className="btn btn-link btn-xs p-0 text-base-content"
+                >
                   <Copy size={22} />
                 </span>
               </div>
@@ -91,7 +101,7 @@ export default function MainLayout() {
           </div>
         </div>
         <div className="flex flex-col bg-base-100 rounded-br-2xl">
-          <div className="grow">
+          <div className="grow p-2">
             {results?.mainMeaning}
             {/* <pre>{JSON.stringify({ results }, null, 2)}</pre> */}
           </div>
@@ -107,8 +117,8 @@ export default function MainLayout() {
             </div>
             <div className="flex gap-1">
               <div className="tooltip tooltip-top" data-tip="Copy">
-                <span className="btn btn-link btn-xs p-0 text-base-content">
-                  <CopySuccess size={22} />
+                <span onClick={() => copy(results?.mainMeaning as string)} className="btn btn-link btn-xs p-0 text-base-content">
+                  <Copy size={22} />
                 </span>
               </div>
               <div className="tooltip tooltip-left" data-tip="Pronounce">

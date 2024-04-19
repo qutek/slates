@@ -9,11 +9,11 @@ import { useShallow } from "zustand/react/shallow";
 import useSettings from "@hooks/useSettings";
 import { isRegistered, register } from "@tauri-apps/api/globalShortcut";
 import { LogicalSize, appWindow } from "@tauri-apps/api/window";
+import { writeText } from '@tauri-apps/api/clipboard';
 import translator from "@src/utils/translator";
 import debounce from "lodash/debounce";
 import useTranslateHistory from "@src/hooks/useTranslateHistory";
 import { Position, move_window } from "tauri-plugin-positioner-api";
-import ThemePicker from "@src/components/settings/ThemePicker";
 import Settings from "@src/components/modals/Settings";
 import SelectLanguage from "@src/components/modals/SelectLanguage";
 
@@ -30,6 +30,7 @@ export interface AppContextValue {
   undo: () => void;
   redo: () => void;
   clear: () => void;
+  copy: (text: string) => void;
   results: any;
   miniWindow: boolean;
 }
@@ -175,6 +176,7 @@ const useAppContextValue = () => {
     undo,
     redo,
     clear,
+    copy: writeText,
     results,
   };
 };
