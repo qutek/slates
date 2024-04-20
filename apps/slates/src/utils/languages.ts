@@ -1,3 +1,5 @@
+import { find } from "lodash";
+
 export const LANGUAGES = [
   {
     key: "auto",
@@ -590,3 +592,7 @@ export const LANGUAGES = [
     nativeName: "Occitan",
   },
 ];
+
+export const getLang = (lang: string) => {
+  return find(LANGUAGES, { key: lang });
+};

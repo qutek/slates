@@ -30,7 +30,7 @@ export interface AppContextValue {
   undo: () => void;
   redo: () => void;
   clear: () => void;
-  copy: (text: string) => void;
+  copy: (text: string) => Promise<void>;
   results: any;
   miniWindow: boolean;
 }
@@ -48,11 +48,13 @@ const useAppContextValue = () => {
   const { undo, redo, clear } = useTranslateHistory.temporal.getState();
 
   // settings.
-  const { theme, miniWindow, setState } = useSettings(
+  const { theme, miniWindow, setState, sourceLang, targetLang } = useSettings(
     useShallow((state) => ({
       theme: state.theme,
       miniWindow: state.miniWindow,
       setState: state.setState,
+      sourceLang: state.sourceLang,
+      targetLang: state.targetLang,
     }))
   );
 
@@ -102,8 +104,8 @@ const useAppContextValue = () => {
       return;
     }
 
-    translator.translate(text, "en", "id").then(setResults);
-  }, [text, miniWindow]);
+    translator.translate(text, sourceLang, targetLang).then(setResults);
+  }, [text, miniWindow, sourceLang, targetLang]);
 
   // open / close modal
   useEffect(() => {
@@ -193,7 +195,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <AppContext.Provider value={value}>
       {children}
       <dialog ref={value.modalRef} className="modal rounded-box">
-        <div className="modal-box h-full w-11/12 max-w-5xl">
+        <div className="modal-box h-full w-11/12 max-w-5xl no-scrollbar">
           {value.openModal === "settings" && <Settings />}
           {value.openModal === "source-lang" && (
             <SelectLanguage type="source" />

@@ -1,102 +1,35 @@
 import useApp from "@src/hooks/useApp";
-import {
-  ArrowForwardSquare,
-  BackSquare,
-  Copy,
-  DriverRefresh,
-  Maximize,
-  Setting3,
-  Translate,
-  VolumeHigh,
-} from "iconsax-react";
 import TextInput from "@src/components/TextInput";
+import Copy from "@src/components/actions/Copy";
+import Undo from "@src/components/actions/Undo";
+import Redo from "@src/components/actions/Redo";
+import Pronounce from "@src/components/actions/Pronounce";
+import ChangeLanguage from "@src/components/actions/ChangeLanguage";
+import MainTopBar from "@src/components/layouts/MainTopBar";
 
 export default function MainLayout() {
   const {
-    changeToMiniWindow,
-    setOpenModal,
     inputRef,
-    undo,
-    redo,
-    copy,
     results,
   } = useApp();
   return (
     <div className="flex flex-col h-full rounded-[16px] bg-base-200 shadow-lg">
-      <div data-tauri-drag-region="true" className="flex justify-between p-2">
-        <div className="flex justify-start items-center space-x-1.5 px-2">
-          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-red-400"></span>
-          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-yellow-400"></span>
-          <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-green-400"></span>
-        </div>
-        <div className="flex gap-1">
-          <div
-            className="tooltip tooltip-left"
-            data-tip="Disable auto translate"
-          >
-            <span className="btn btn-link btn-xs p-0 text-success">
-              <DriverRefresh size={22} />
-            </span>
-          </div>
-          <div className="tooltip tooltip-left" data-tip="Use mini window">
-            <span
-              onClick={() => changeToMiniWindow()}
-              className="btn btn-link btn-xs p-0 text-base-content"
-            >
-              <Maximize size={22} />
-            </span>
-          </div>
-          <div
-            onClick={() => setOpenModal("settings")}
-            className="btn btn-link btn-xs p-0"
-          >
-            <Setting3 size={22} />
-          </div>
-        </div>
-      </div>
+      <MainTopBar />
       <main className="grid grid-cols-2 grow">
         <div className="flex flex-col">
           <TextInput className="textarea textarea-ghost bg-base-200 grow text-2xl focus:outline-none focus:border-none" />
           <div className="flex justify-between p-2">
             <div className="flex gap-1">
-              <span
-                onClick={() => setOpenModal("source-lang")}
-                className="btn btn-link btn-xs text-primary"
-              >
-                <Translate size={20} />
-                Auto Detect
-              </span>
+              <ChangeLanguage tooltipPosition={false} type="sourceLang" />
             </div>
             <div className="flex gap-1">
-              <div className="tooltip tooltip-top" data-tip="Undo">
-                <span
-                  onClick={() => undo()}
-                  className="btn btn-link btn-xs p-0 text-base-content"
-                >
-                  <BackSquare size={22} />
-                </span>
-              </div>
-              <div className="tooltip tooltip-top" data-tip="Redo">
-                <span
-                  onClick={() => redo()}
-                  className="btn btn-link btn-xs p-0 text-base-content"
-                >
-                  <ArrowForwardSquare size={22} />
-                </span>
-              </div>
-              <div className="tooltip tooltip-top" data-tip="Copy">
-                <span
-                  onClick={() => copy(inputRef.current?.value as string)}
-                  className="btn btn-link btn-xs p-0 text-base-content"
-                >
-                  <Copy size={22} />
-                </span>
-              </div>
-              <div className="tooltip tooltip-top" data-tip="Pronounce">
-                <span className="btn btn-link btn-xs p-0 text-base-content">
-                  <VolumeHigh size={22} />
-                </span>
-              </div>
+              <Undo tooltipPosition="top" />
+              <Redo tooltipPosition="top" />
+              <Copy
+                tooltipPosition="top"
+                text={inputRef.current?.value as string}
+              />
+              <Pronounce tooltipPosition="top" />
             </div>
           </div>
         </div>
@@ -107,25 +40,14 @@ export default function MainLayout() {
           </div>
           <div className="flex justify-between p-2">
             <div className="flex gap-1">
-              <span
-                onClick={() => setOpenModal("target-lang")}
-                className="btn btn-link btn-xs"
-              >
-                <Translate size={20} />
-                Indonesia
-              </span>
+              <ChangeLanguage tooltipPosition={false} type="targetLang" />
             </div>
             <div className="flex gap-1">
-              <div className="tooltip tooltip-top" data-tip="Copy">
-                <span onClick={() => copy(results?.mainMeaning as string)} className="btn btn-link btn-xs p-0 text-base-content">
-                  <Copy size={22} />
-                </span>
-              </div>
-              <div className="tooltip tooltip-left" data-tip="Pronounce">
-                <span className="btn btn-link btn-xs p-0 text-base-content">
-                  <VolumeHigh size={22} />
-                </span>
-              </div>
+              <Copy
+                tooltipPosition="top"
+                text={results?.mainMeaning as string}
+              />
+              <Pronounce tooltipPosition="left" />
             </div>
           </div>
         </div>

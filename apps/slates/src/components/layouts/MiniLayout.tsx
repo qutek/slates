@@ -1,13 +1,14 @@
-import { ArrangeHorizontalSquare, DriverRefresh, Maximize, Setting3 } from "iconsax-react";
+import { ArrangeHorizontalSquare } from "iconsax-react";
 import { appWindow, LogicalSize } from "@tauri-apps/api/window";
 import { move_window, Position } from "tauri-plugin-positioner-api";
 import useApp from "@src/hooks/useApp";
 import isEmpty from "lodash/isEmpty";
 import TextInput from "@src/components/TextInput";
+import MiniBottomBar from "@src/components/layouts/MiniBottomBar";
 import { useEffect } from "react";
 
 export default function MiniLayout() {
-  const { changeToMainWindow, results } = useApp();
+  const { results } = useApp();
   const hasResult = !isEmpty(results);
 
   useEffect(() => {
@@ -50,29 +51,7 @@ export default function MiniLayout() {
             Auto Detect - Indonesia
           </span>
         </div>
-        <div className="flex gap-1">
-          <div
-            className="tooltip tooltip-left"
-            data-tip="Disable auto translate"
-          >
-            <span className="btn btn-link btn-xs p-0 text-success">
-              <DriverRefresh size={22} />
-            </span>
-          </div>
-          <div className="tooltip tooltip-left" data-tip="Open in main window">
-            <span
-              onClick={() => changeToMainWindow()}
-              className="btn btn-link btn-xs p-0 text-base-content"
-            >
-              <Maximize size={22} className="rotate-180" />
-            </span>
-          </div>
-          <div className=" tooltip tooltip-left" data-tip="Open settings">
-            <span className="btn btn-link btn-xs p-0 text-base-content">
-              <Setting3 size={22} />
-            </span>
-          </div>
-        </div>
+        <MiniBottomBar />
       </div>
     </div>
   );

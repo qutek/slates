@@ -10,6 +10,7 @@ interface Settings {
   theme: string;
   sourceLang: string;
   targetLang: string;
+  autoTranslate: boolean;
   reverseTranslate: boolean;
   setState: (state: any) => void;
 }
@@ -39,6 +40,7 @@ const useSettings = create<Settings>()(
       sourceLang: 'auto',
       targetLang: 'id',
       reverseTranslate: false,
+      autoTranslate: false,
       translateResult: null,
       showDetailResult: false,
       setState: newState => set(state => ({ ...state, ...newState })),

@@ -1,8 +1,7 @@
 import { Fragment, useMemo, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { Global } from "iconsax-react";
-import { LANGUAGES } from "@src/utils/languages";
-import { find } from "lodash";
+import { LANGUAGES, getLang } from "@src/utils/languages";
 
 interface InputSelectLanguageProps {
   value: string;
@@ -13,7 +12,7 @@ export default function InputSelectLanguage(props: InputSelectLanguageProps) {
   const [query, setQuery] = useState("");
 
   const value = useMemo(() => {
-    return find(LANGUAGES, { key: props.value });
+    return getLang(props.value);
   }, [props.value]);
 
   const filteredData =
