@@ -1,7 +1,7 @@
 import useSettings from "@src/hooks/useSettings";
 import { classNames } from "@src/utils/common";
 import { LANGUAGES, getLang } from "@src/utils/languages";
-import { Translate } from "iconsax-react";
+import { Global } from "iconsax-react";
 import { map } from "lodash";
 import { useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -60,7 +60,7 @@ export default function ChangeLanguage({
         role="button"
         className="btn btn-link btn-xs text-primary mt-2"
       >
-        <Translate size={20} />
+        <Global size={20} />
         {langData?.name}
       </span>
       <div

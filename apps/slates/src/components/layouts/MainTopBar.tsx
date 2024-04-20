@@ -1,4 +1,4 @@
-import ToggleAutoTranslate from "@src/components/actions/ToggleAutoTranslate";
+import SwapLanguage from "@src/components/actions/SwapLanguage";
 import MoveToMiniWindow from "@src/components/actions/MoveToMiniWindow";
 import OpenSettings from "@src/components/actions/OpenSettings";
 
@@ -11,7 +11,7 @@ export default function TopBar() {
         <span className="w-4 h-4 border-2 border-transparent rounded-full cursor-pointer bg-green-400"></span>
       </div>
       <div className="flex gap-1">
-        <ToggleAutoTranslate tooltipPosition="left" />
+        <SwapLanguage tooltipPosition="left" />
         <MoveToMiniWindow tooltipPosition="left" />
         <OpenSettings tooltipPosition={false} />
       </div>

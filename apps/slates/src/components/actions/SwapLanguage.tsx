@@ -1,9 +1,9 @@
 import useSettings from "@src/hooks/useSettings";
 import { classNames } from "@src/utils/common";
-import { DriverRefresh } from "iconsax-react";
+import { Translate } from "iconsax-react";
 import { useShallow } from "zustand/react/shallow";
 
-export default function ToggleAutoTranslate({
+export default function SwapLanguage({
   tooltipPosition,
 }: {
   tooltipPosition: string | boolean;
@@ -29,7 +29,7 @@ export default function ToggleAutoTranslate({
         "right" === tooltipPosition ? "tooltip-right" : "",
         "left" === tooltipPosition ? "tooltip-left" : ""
       )}
-      data-tip={autoTranslate ? "Disable auto translate" : "Enable auto translate"}
+      data-tip="Swap language"
     >
       <span
         onClick={toggleAutoTranslate}
@@ -38,7 +38,7 @@ export default function ToggleAutoTranslate({
           autoTranslate ? "text-success" : "text-base-content"
         )}
       >
-        <DriverRefresh size={22} />
+        <Translate size={22} className={autoTranslate ? "scale-x-[-1]" : ""} />
       </span>
     </div>
   );

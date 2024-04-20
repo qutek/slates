@@ -29,7 +29,7 @@ export default function MiniLayout() {
   return (
     <div className="flex flex-col rounded-t-[16px] max-h-full opacity-90">
       <div className="bg-base-200 rounded-none rounded-t-[16px] ">
-        <TextInput className="textarea textarea-ghost textarea-xs text-2xl focus:outline-none focus:border-none bg-base-200 w-full border-0" />
+        <TextInput className="textarea textarea-ghost textarea-xs text-2xl focus:outline-none focus:border-none bg-base-200 w-full border-0 no-scrollbar" />
       </div>
       {!isEmpty(results) && (
         <div className="grow bg-base-200 border-t border-neutral p-2 overflow-auto scrollbar-thin">
