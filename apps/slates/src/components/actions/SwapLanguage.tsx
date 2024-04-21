@@ -8,18 +8,13 @@ export default function SwapLanguage({
 }: {
   tooltipPosition: string | boolean;
 }) {
-  const { autoTranslate, setState } = useSettings(
+  const { swapLanguage, sourceLang, targetLang } = useSettings(
     useShallow((state) => ({
-      autoTranslate: state.autoTranslate,
-      setState: state.setState,
+      swapLanguage: state.swapLanguage,
+      sourceLang: state.sourceLang,
+      targetLang: state.targetLang,
     }))
   );
-
-  const toggleAutoTranslate = () => {
-    setState({
-      autoTranslate: !autoTranslate,
-    });
-  };
 
   return (
     <div
@@ -32,13 +27,13 @@ export default function SwapLanguage({
       data-tip="Swap language"
     >
       <span
-        onClick={toggleAutoTranslate}
+        onClick={() => swapLanguage()}
         className={classNames(
-          "btn btn-link btn-xs p-0",
-          autoTranslate ? "text-success" : "text-base-content"
+          "btn btn-link btn-xs p-0 text-primary",
+          [sourceLang, targetLang].includes("auto") ? "btn-disabled" : ""
         )}
       >
-        <Translate size={22} className={autoTranslate ? "scale-x-[-1]" : ""} />
+        <Translate size={22} />
       </span>
     </div>
   );

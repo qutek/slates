@@ -21,7 +21,6 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "@headlessui/react": "^1.7.19",
     "@tauri-apps/api": "^1",
     "formik": "^2.4.5",
     "tauri-plugin-positioner-api": "^0.2.7",

@@ -18,7 +18,7 @@ export default function MoveToMiniWindow({
       )}
       data-tip="Use mini window"
     >
-      <span onClick={() => changeToMiniWindow()} className="btn btn-link btn-xs p-0 text-base-content">
+      <span onClick={() => changeToMiniWindow()} className="btn btn-link btn-xs p-0 text-primary">
         <Maximize size={22} />
       </span>
     </div>

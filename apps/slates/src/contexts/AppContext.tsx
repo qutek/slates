@@ -195,7 +195,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <AppContext.Provider value={value}>
       {children}
       <dialog ref={value.modalRef} className="modal rounded-box">
-        <div className="modal-box h-full w-11/12 max-w-5xl no-scrollbar">
+        <div className="modal-box h-full w-11/12 max-w-5xl">
           {value.openModal === "settings" && <Settings />}
           {value.openModal === "source-lang" && (
             <SelectLanguage type="source" />

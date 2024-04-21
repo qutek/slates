@@ -20,7 +20,7 @@ export default function OpenSettings({
     >
       <span
         onClick={() => setOpenModal("settings")}
-        className="btn btn-link btn-xs p-0 text-base-content"
+        className="btn btn-link btn-xs p-0 text-primary"
       >
         <Setting3 size={22} />
       </span>

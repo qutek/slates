@@ -21,14 +21,13 @@ export default function GeneralSetting() {
       autoLaunch: false,
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       setState(values);
     },
   });
 
   return (
     <>
-      <div className="flex flex-col gap-6 mt-8">
+      <div className="grow flex flex-col gap-4 mt-8">
         <div className="flex">
           <div className="w-1/3">Shortcut</div>
           <div className="flex gap-1">
@@ -47,6 +46,7 @@ export default function GeneralSetting() {
           <div className="w-1/3">Target language</div>
           <InputSelectLanguage
             onChange={(val) => formik.setFieldValue("targetLang", val)}
+            type="targetLang"
             value={formik.values.targetLang}
           />
         </div>

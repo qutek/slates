@@ -18,7 +18,7 @@ export default function MoveToMainWindow({
       )}
       data-tip="Open in main window"
     >
-      <span onClick={() => changeToMainWindow()} className="btn btn-link btn-xs p-0 text-base-content">
+      <span onClick={() => changeToMainWindow()} className="btn btn-link btn-xs p-0 text-primary">
         <Maximize size={22} className="rotate-180" />
       </span>
     </div>

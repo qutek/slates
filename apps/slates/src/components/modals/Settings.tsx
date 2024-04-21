@@ -18,7 +18,7 @@ const SETTING_TABS = {
 export default function Settings() {
   const [activeTab, setActiveTab] = useState<string>("general");
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="flex flex-col justify-between h-full gap-2">
       <div role="tablist" className="tabs tabs-boxed">
         {map(SETTING_TABS, (tab, id) => (
           <a
@@ -31,9 +31,7 @@ export default function Settings() {
           </a>
         ))}
       </div>
-      <div role="tab-content" className="py-3 grow flex flex-col justify-between">
-        {SETTING_TABS[activeTab as keyof typeof SETTING_TABS].component}
-      </div>
+      {SETTING_TABS[activeTab as keyof typeof SETTING_TABS].component}
     </div>
   );
 }

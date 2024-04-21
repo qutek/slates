@@ -52,7 +52,7 @@ export default function MainLayout() {
             <ChangeLanguage tooltipPosition={false} type="targetLang" />
           </div>
           <div className="flex gap-1">
-            <div className="tooltip tooltip-top" data-tip="View Dictionary">
+            <div className="tooltip tooltip-left" data-tip="View Dictionary">
               <span
                 onClick={() => setOpenDetails(!openDetails)}
                 className={classNames(
@@ -64,7 +64,7 @@ export default function MainLayout() {
                 <ReceiptSearch size={22} />
               </span>
             </div>
-            <Copy tooltipPosition="top" text={results?.mainMeaning as string} />
+            <Copy tooltipPosition="left" text={results?.mainMeaning as string} />
             <Pronounce tooltipPosition="left" />
           </div>
         </div>

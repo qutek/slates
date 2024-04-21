@@ -10,9 +10,9 @@ interface Settings {
   theme: string;
   sourceLang: string;
   targetLang: string;
-  autoTranslate: boolean;
   reverseTranslate: boolean;
   setState: (state: any) => void;
+  swapLanguage: () => void;
 }
 
 const settingsStorage = (store: Store): StateStorage => ({
@@ -37,13 +37,17 @@ const useSettings = create<Settings>()(
     (set) => ({
       miniWindow: false,
       theme: "dark",
-      sourceLang: 'auto',
-      targetLang: 'id',
+      sourceLang: "auto",
+      targetLang: "id",
       reverseTranslate: false,
-      autoTranslate: false,
       translateResult: null,
       showDetailResult: false,
-      setState: newState => set(state => ({ ...state, ...newState })),
+      setState: (newState) => set((state) => ({ ...state, ...newState })),
+      swapLanguage: () => set((state) => ({
+        ...state,
+        sourceLang: state.targetLang,
+        targetLang: state.sourceLang
+      })),
     }),
     {
       name: "slates-settings", // name of item in the storage (must be unique)

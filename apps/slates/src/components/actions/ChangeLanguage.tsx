@@ -39,6 +39,8 @@ export default function ChangeLanguage({
     setState({
       [type]: langKey,
     });
+
+    setSearch("");
     if (elem) {
       (elem as HTMLElement)?.blur();
     }

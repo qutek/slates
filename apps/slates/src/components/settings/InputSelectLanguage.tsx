@@ -1,90 +1,98 @@
-import { Fragment, useMemo, useState } from "react";
-import { Combobox, Transition } from "@headlessui/react";
+import { useMemo, useState } from "react";
 import { Global } from "iconsax-react";
 import { LANGUAGES, getLang } from "@src/utils/languages";
+import { map } from "lodash";
 
 interface InputSelectLanguageProps {
   value: string;
+  type?: string;
   onChange: (value: any) => void;
 }
 
-export default function InputSelectLanguage(props: InputSelectLanguageProps) {
-  const [query, setQuery] = useState("");
+export default function InputSelectLanguage({
+  value,
+  type,
+  onChange,
+}: InputSelectLanguageProps) {
+  const [search, setSearch] = useState<string>("");
 
-  const value = useMemo(() => {
-    return getLang(props.value);
-  }, [props.value]);
+  const filteredLanguages = useMemo(() => {
+    return LANGUAGES.filter(
+      (lang) =>
+        lang.name.toLowerCase().includes(search.toLowerCase()) &&
+        (type !== "targetLang" || lang.key !== "auto")
+    );
+  }, [type, search]);
 
-  const filteredData =
-    query === ""
-      ? LANGUAGES
-      : LANGUAGES.filter((lang) =>
-          lang.name
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
-        );
+  const langData = useMemo(() => {
+    return getLang(value);
+  }, [value]);
+
+  const handleSelect = (langKey: string) => {
+    const elem = document.activeElement;
+    onChange(langKey);
+    if (elem) {
+      (elem as HTMLElement)?.blur();
+    }
+  };
 
   return (
-    <Combobox value={value} onChange={(lang) => props.onChange(lang.key)}>
-      <div className="relative">
-        <Combobox.Input
-          className="input input-bordered input-md w-full max-w-xs"
-          displayValue={(person: { name: string }) => person.name}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-          <Global className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Combobox.Button>
-        <Transition
-          as={Fragment}
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-          afterLeave={() => setQuery("")}
-        >
-          <Combobox.Options className="z-50 absolute mt-2 max-h-60 w-full overflow-auto rounded-md bg-base-100 py-1 shadow-lg ring-1 focus:outline-none">
-            {filteredData.length === 0 && query !== "" ? (
-              <div className="relative cursor-default select-none px-4 py-2">
-                Nothing found.
-              </div>
-            ) : (
-              filteredData.map((lang) => (
-                <Combobox.Option
-                  key={lang.key}
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none py-1 pl-10 pr-4 ${
-                      active ? "bg-base-200" : ""
-                    }`
+    <div className="dropdown">
+      <span
+        tabIndex={0}
+        role="button"
+        className="btn btn-link btn-xs text-primary mt-2"
+      >
+        <Global size={20} />
+        {langData?.name}
+      </span>
+      <div
+        tabIndex={0}
+        className="card compact dropdown-content z-[1] shadow rounded-box w-64 bg-base-200"
+      >
+        <div tabIndex={0} className="card-body flex">
+          <label className="input input-sm w-full input-bordered flex items-center gap-2">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="text"
+              className="grow"
+              placeholder="Search"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-4 h-4 opacity-70"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </label>
+          <ul className="menu p-0 max-h-40 overflow-y-scroll no-scrollbar flex-col flex-nowrap">
+            {map(filteredLanguages, (lang, i) => (
+              <li
+                onClick={() => handleSelect(lang.key)}
+                key={i}
+                className="w-full my-[1px]"
+              >
+                <a
+                  className={
+                    lang.key === langData?.key
+                      ? "bg-base-content bg-opacity-10"
+                      : ""
                   }
-                  value={lang}
                 >
-                  {({ selected, active }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? "font-medium" : "font-normal"
-                        }`}
-                      >
-                        {lang.name}
-                      </span>
-                      {selected ? (
-                        <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                            active ? "" : "text-primary"
-                          }`}
-                        >
-                          <Global />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Combobox.Option>
-              ))
-            )}
-          </Combobox.Options>
-        </Transition>
+                  {lang.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </Combobox>
+    </div>
   );
 }
