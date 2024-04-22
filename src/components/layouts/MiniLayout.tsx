@@ -5,11 +5,10 @@ import useApp from "@frontend/hooks/useApp";
 import isEmpty from "lodash/isEmpty";
 import TextInput from "@frontend/components/TextInput";
 import MiniBottomBar from "@frontend/components/layouts/MiniBottomBar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ResultDetails from "./ResultDetails";
 
 export default function MiniLayout() {
-  const [openDetails, setOpenDetails] = useState<boolean>(true);
   const { results } = useApp();
   const { mainMeaning, originalText, sPronunciation, ...resultDetails } =
     results;
@@ -38,7 +37,7 @@ export default function MiniLayout() {
       {!isEmpty(results) && (
         <div className="grow bg-base-200 border-t border-neutral p-2 overflow-auto scrollbar-thin">
           <div className="p-3 text-2xl">{mainMeaning}</div>
-          {openDetails && <ResultDetails {...resultDetails} />}
+          {!isEmpty(resultDetails) && <ResultDetails {...resultDetails} />}
         </div>
       )}
       <div className="bg-base-100 rounded-b-[16px] p-2 flex justify-between border-t border-neutral shadow-xl">
