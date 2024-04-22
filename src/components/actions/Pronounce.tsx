@@ -1,4 +1,4 @@
-import { classNames } from "@src/utils/common";
+import { classNames } from "@frontend/utils/common";
 import { VolumeHigh } from "iconsax-react";
 
 export default function Pronounce({

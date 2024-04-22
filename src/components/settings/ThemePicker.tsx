@@ -1,5 +1,5 @@
-import useSettings from "@src/hooks/useSettings";
-import { THEMES, classNames } from "@src/utils/common";
+import useSettings from "@frontend/hooks/useSettings";
+import { THEMES, classNames } from "@frontend/utils/common";
 import { useShallow } from "zustand/react/shallow";
 
 export default function ThemePicker() {

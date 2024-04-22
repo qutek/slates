@@ -1,4 +1,4 @@
-import { AppContext, AppContextValue } from "@src/contexts/AppContext";
+import { AppContext, AppContextValue } from "@frontend/contexts/AppContext";
 import { useContext } from "react";
 
 const useApp = (): AppContextValue => {

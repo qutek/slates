@@ -1,4 +1,4 @@
-import useApp from "@src/hooks/useApp";
+import useApp from "@frontend/hooks/useApp";
 
 export default function TextInput({ className }: { className: string }) {
   const { inputRef } = useApp();

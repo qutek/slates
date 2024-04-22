@@ -1,6 +1,6 @@
-import SwapLanguage from "@src/components/actions/SwapLanguage";
-import MoveToMiniWindow from "@src/components/actions/MoveToMiniWindow";
-import OpenSettings from "@src/components/actions/OpenSettings";
+import SwapLanguage from "@frontend/components/actions/SwapLanguage";
+import MoveToMiniWindow from "@frontend/components/actions/MoveToMiniWindow";
+import OpenSettings from "@frontend/components/actions/OpenSettings";
 
 export default function TopBar() {
   return (

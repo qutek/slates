@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Global } from "iconsax-react";
-import { LANGUAGES, getLang } from "@src/utils/languages";
+import { LANGUAGES, getLang } from "@frontend/utils/languages";
 import { map } from "lodash";
 
 interface InputSelectLanguageProps {

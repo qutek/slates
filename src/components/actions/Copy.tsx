@@ -1,5 +1,5 @@
-import useApp from "@src/hooks/useApp";
-import { classNames } from "@src/utils/common";
+import useApp from "@frontend/hooks/useApp";
+import { classNames } from "@frontend/utils/common";
 import { Copy as CopyIcon, CopySuccess } from "iconsax-react";
 import { useState } from "react";
 

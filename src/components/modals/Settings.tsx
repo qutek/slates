@@ -1,8 +1,8 @@
-import { classNames } from "@src/utils/common";
+import { classNames } from "@frontend/utils/common";
 import { map } from "lodash";
 import { useState } from "react";
-import ThemePicker from "@src/components/settings/ThemePicker";
-import GeneralSetting from "@src/components/settings/GeneralSetting";
+import ThemePicker from "@frontend/components/settings/ThemePicker";
+import GeneralSetting from "@frontend/components/settings/GeneralSetting";
 
 const SETTING_TABS = {
   general: {

@@ -1,4 +1,4 @@
-import useSettings from "@src/hooks/useSettings";
+import useSettings from "@frontend/hooks/useSettings";
 import InputSelectLanguage from "./InputSelectLanguage";
 import { useFormik } from "formik";
 import { useShallow } from "zustand/react/shallow";

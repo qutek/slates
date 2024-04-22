@@ -1,6 +1,6 @@
-import SwapLanguage from "@src/components/actions/SwapLanguage";
-// import OpenSettings from "@src/components/actions/OpenSettings";
-import MoveToMainWindow from "@src/components/actions/MoveToMainWindow";
+import SwapLanguage from "@frontend/components/actions/SwapLanguage";
+// import OpenSettings from "@frontend/components/actions/OpenSettings";
+import MoveToMainWindow from "@frontend/components/actions/MoveToMainWindow";
 
 export default function MiniBottomBar() {
   return (

@@ -1,4 +1,4 @@
-import { classNames } from "@src/utils/common";
+import { classNames } from "@frontend/utils/common";
 import _, { map } from "lodash";
 import { useMemo, useState } from "react";
 

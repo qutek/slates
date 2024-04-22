@@ -1,10 +1,10 @@
 import { ArrangeHorizontalSquare } from "iconsax-react";
 import { appWindow, LogicalSize } from "@tauri-apps/api/window";
 import { move_window, Position } from "tauri-plugin-positioner-api";
-import useApp from "@src/hooks/useApp";
+import useApp from "@frontend/hooks/useApp";
 import isEmpty from "lodash/isEmpty";
-import TextInput from "@src/components/TextInput";
-import MiniBottomBar from "@src/components/layouts/MiniBottomBar";
+import TextInput from "@frontend/components/TextInput";
+import MiniBottomBar from "@frontend/components/layouts/MiniBottomBar";
 import { useEffect, useState } from "react";
 import ResultDetails from "./ResultDetails";
 

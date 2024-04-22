@@ -1,5 +1,5 @@
-import useSettings from "@src/hooks/useSettings";
-import { classNames } from "@src/utils/common";
+import useSettings from "@frontend/hooks/useSettings";
+import { classNames } from "@frontend/utils/common";
 import { Translate } from "iconsax-react";
 import { useShallow } from "zustand/react/shallow";
 

@@ -1,5 +1,5 @@
-import useApp from "@src/hooks/useApp";
-import { classNames } from "@src/utils/common";
+import useApp from "@frontend/hooks/useApp";
+import { classNames } from "@frontend/utils/common";
 import { Setting3 } from "iconsax-react";
 
 export default function OpenSettings({

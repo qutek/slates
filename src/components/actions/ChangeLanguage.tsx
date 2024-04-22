@@ -1,6 +1,6 @@
-import useSettings from "@src/hooks/useSettings";
-import { classNames } from "@src/utils/common";
-import { LANGUAGES, getLang } from "@src/utils/languages";
+import useSettings from "@frontend/hooks/useSettings";
+import { classNames } from "@frontend/utils/common";
+import { LANGUAGES, getLang } from "@frontend/utils/languages";
 import { Global } from "iconsax-react";
 import { map } from "lodash";
 import { useMemo, useState } from "react";

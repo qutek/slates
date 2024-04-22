@@ -6,16 +6,16 @@ import React, {
   useState,
 } from "react";
 import { useShallow } from "zustand/react/shallow";
-import useSettings from "@hooks/useSettings";
+import useSettings from "@frontend/hooks/useSettings";
 import { isRegistered, register } from "@tauri-apps/api/globalShortcut";
 import { LogicalSize, appWindow } from "@tauri-apps/api/window";
 import { writeText } from '@tauri-apps/api/clipboard';
-import translator from "@src/utils/translator";
+import translator from "@frontend/utils/translator";
 import debounce from "lodash/debounce";
-import useTranslateHistory from "@src/hooks/useTranslateHistory";
+import useTranslateHistory from "@frontend/hooks/useTranslateHistory";
 import { Position, move_window } from "tauri-plugin-positioner-api";
-import Settings from "@src/components/modals/Settings";
-import SelectLanguage from "@src/components/modals/SelectLanguage";
+import Settings from "@frontend/components/modals/Settings";
+import SelectLanguage from "@frontend/components/modals/SelectLanguage";
 
 const SHORTCUT = "CommandOrControl+Shift+T";
 
