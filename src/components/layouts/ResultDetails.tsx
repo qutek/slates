@@ -10,7 +10,7 @@ export default function ResultDetails(props: any) {
       .map((key) => ({
         id: key,
         title: _.startCase(_.lowerCase(key)),
-        data: props[key]
+        data: props[key],
       }))
       .value();
   }, [props]);
@@ -30,7 +30,9 @@ export default function ResultDetails(props: any) {
         ))}
       </div>
       <div className="p-2 overflow-auto no-scrollbar">
-        <pre>{JSON.stringify(tabs[activeIndex].data, null, 2)}</pre>
+        {tabs[activeIndex]?.data && (
+          <pre>{JSON.stringify(tabs[activeIndex], null, 2)}</pre>
+        )}
       </div>
     </>
   );

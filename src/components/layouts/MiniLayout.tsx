@@ -1,15 +1,23 @@
-import { ArrangeHorizontalSquare } from "iconsax-react";
 import { appWindow, LogicalSize } from "@tauri-apps/api/window";
-import { move_window, Position } from "tauri-plugin-positioner-api";
 import useApp from "@frontend/hooks/useApp";
 import isEmpty from "lodash/isEmpty";
 import TextInput from "@frontend/components/TextInput";
 import MiniBottomBar from "@frontend/components/layouts/MiniBottomBar";
 import { useEffect } from "react";
 import ResultDetails from "./ResultDetails";
+import useSettings from "@frontend/hooks/useSettings";
+import { useShallow } from "zustand/react/shallow";
+import { getLang } from "@frontend/utils/languages";
+import SwapLanguage from "@frontend/components/actions/SwapLanguage";
 
 export default function MiniLayout() {
   const { results } = useApp();
+  const { sourceLang, targetLang } = useSettings(
+    useShallow((state) => ({
+      sourceLang: state.sourceLang,
+      targetLang: state.targetLang,
+    }))
+  );
   const { mainMeaning, originalText, sPronunciation, ...resultDetails } =
     results;
   const hasResult = !isEmpty(results);
@@ -40,20 +48,10 @@ export default function MiniLayout() {
           {!isEmpty(resultDetails) && <ResultDetails {...resultDetails} />}
         </div>
       )}
-      <div className="bg-base-100 rounded-b-[16px] p-2 flex justify-between border-t border-neutral shadow-xl">
-        <div className="tooltip" data-tip="Swap language">
-          <span
-            className="btn btn-link btn-xs text-primary"
-            onClick={() =>
-              appWindow
-                .setSize(new LogicalSize(400, 500))
-                .then(() => move_window(Position.TopRight))
-                .catch(console.log)
-            }
-          >
-            <ArrangeHorizontalSquare size={22} />
-            Auto Detect - Indonesia
-          </span>
+      <div className="bg-base-100 rounded-b-[16px] p-2 flex justify-between items-center border-t border-neutral shadow-xl">
+        <div className="flex items-center gap-1">
+          <SwapLanguage tooltipPosition="right" />
+          <span className="text-sm text-primary font-medium pb-1">{`${getLang(sourceLang)?.name} - ${getLang(targetLang)?.name}`}</span>
         </div>
         <MiniBottomBar />
       </div>
