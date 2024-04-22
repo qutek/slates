@@ -37,5 +37,5 @@ export default {
       "winter",
     ],
   },
-  plugins: [require("daisyui"), require('tailwind-scrollbar')],
+  plugins: [require("daisyui")],
 };
