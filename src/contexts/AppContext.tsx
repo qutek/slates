@@ -15,7 +15,6 @@ import debounce from "lodash/debounce";
 import useTranslateHistory from "@frontend/hooks/useTranslateHistory";
 import { Position, move_window } from "tauri-plugin-positioner-api";
 import Settings from "@frontend/components/modals/Settings";
-import SelectLanguage from "@frontend/components/modals/SelectLanguage";
 
 const SHORTCUT = "CommandOrControl+Shift+T";
 
@@ -197,12 +196,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <dialog ref={value.modalRef} className="modal rounded-box">
         <div className="modal-box h-full w-11/12 max-w-5xl">
           {value.openModal === "settings" && <Settings />}
-          {value.openModal === "source-lang" && (
-            <SelectLanguage type="source" />
-          )}
-          {value.openModal === "target-lang" && (
-            <SelectLanguage type="target" />
-          )}
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
