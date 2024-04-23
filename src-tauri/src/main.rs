@@ -9,16 +9,18 @@ use tauri::{CustomMenuItem, Manager, SystemTrayEvent, SystemTrayMenu, SystemTray
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
-  // move window to topright
-  // let window = tauri::Manager::current_window().unwrap();
-  // window.move_window(Position::TopRight);
+    // move window to topright
+    // let window = tauri::Manager::current_window().unwrap();
+    // window.move_window(Position::TopRight);
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
 fn main() {
     // create tray menu
-    let quit: CustomMenuItem = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("CommandOrControl+Q");
-    let hide: CustomMenuItem = CustomMenuItem::new("hide".to_string(), "Hide").accelerator("CommandOrControl+H");
+    let quit: CustomMenuItem =
+        CustomMenuItem::new("quit".to_string(), "Quit").accelerator("CommandOrControl+Q");
+    let hide: CustomMenuItem =
+        CustomMenuItem::new("hide".to_string(), "Hide").accelerator("CommandOrControl+H");
     let tray_menu: SystemTrayMenu = SystemTrayMenu::new()
         .add_item(hide)
         .add_native_item(SystemTrayMenuItem::Separator)
@@ -28,13 +30,16 @@ fn main() {
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_positioner::init())
         .setup(|app| {
-          // positioning the window to top right.
-          // let window = app.get_window("main").unwrap();
-          // let _ = window.move_window(Position::TopRight);
-          // disable app icon
-          // https://github.com/tauri-apps/tauri/discussions/6038#discussioncomment-4687750
-          app.set_activation_policy(tauri::ActivationPolicy::Accessory);
-          Ok(())
+            // positioning the window to top right.
+            // let window = app.get_window("main").unwrap();
+            // let _ = window.move_window(Position::TopRight);
+            // disable app icon
+            // https://github.com/tauri-apps/tauri/discussions/6038#discussioncomment-4687750
+            #[cfg(target_os = "macos")]
+            {
+                app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+            }
+            Ok(())
         })
         .system_tray(SystemTray::new().with_menu(tray_menu))
         // This is required to get tray-relative positions to work
