@@ -9,7 +9,7 @@ import { useShallow } from "zustand/react/shallow";
 import useSettings from "@frontend/hooks/useSettings";
 import { isRegistered, register } from "@tauri-apps/api/globalShortcut";
 import { LogicalSize, appWindow } from "@tauri-apps/api/window";
-import { writeText } from '@tauri-apps/api/clipboard';
+import { writeText } from "@tauri-apps/api/clipboard";
 import translator from "@frontend/utils/translator";
 import debounce from "lodash/debounce";
 import useTranslateHistory from "@frontend/hooks/useTranslateHistory";
@@ -116,25 +116,8 @@ const useAppContextValue = () => {
     }
   }, [openModal]);
 
-  // common listener.
+  // window effects.
   useEffect(() => {
-    isRegistered(SHORTCUT).then((registered) => {
-      if (!registered) {
-        return register(SHORTCUT, async (e) => {
-          // move_window(Position.TopRight);
-          const visible = await appWindow.isVisible();
-          if (visible) {
-            await appWindow.hide();
-          } else {
-            await appWindow.show();
-            await appWindow.setFocus();
-            inputRef.current?.focus();
-          }
-          console.log(SHORTCUT, { e });
-        });
-      }
-    });
-
     const handleChange = debounce(() => {
       console.log("handleChange");
       const value = inputRef.current?.value as string;
@@ -164,6 +147,50 @@ const useAppContextValue = () => {
       }
     };
   }, [miniWindow]);
+
+  // initial load effect.
+  useEffect(() => {
+    isRegistered(SHORTCUT).then((registered) => {
+      if (!registered) {
+        return register(SHORTCUT, async (e) => {
+          // move_window(Position.TopRight);
+          const visible = await appWindow.isVisible();
+          if (visible) {
+            await appWindow.hide();
+          } else {
+            await appWindow.show();
+            await appWindow.setFocus();
+            inputRef.current?.focus();
+          }
+          console.log(SHORTCUT, { e });
+        });
+      }
+    });
+
+    if (miniWindow) {
+      appWindow
+        .hide()
+        .then(() => appWindow.setSize(new LogicalSize(400, 600)))
+        .then(() => move_window(Position.TopRight))
+        .then(() => appWindow.show())
+        .then(() => appWindow.setFocus())
+        .then(() => appWindow.setAlwaysOnTop(true))
+        .then(() => appWindow.setResizable(false))
+        .then(() => setState({ miniWindow: true }))
+        .catch(console.log);
+    } else {
+      appWindow
+        .hide()
+        .then(() => appWindow.setSize(new LogicalSize(900, 600)))
+        .then(() => move_window(Position.Center))
+        .then(() => appWindow.show())
+        .then(() => appWindow.setFocus())
+        .then(() => appWindow.setAlwaysOnTop(false))
+        .then(() => appWindow.setResizable(true))
+        .then(() => setState({ miniWindow: false }))
+        .catch(console.log);
+    }
+  }, []);
 
   return {
     inputRef,

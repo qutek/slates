@@ -45,6 +45,7 @@
         "decorations": false,
         "hiddenTitle": true,
         "transparent": true,
+        "visible": false,
         "minWidth": 900,
         "minHeight": 600
       }
